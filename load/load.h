@@ -12,4 +12,10 @@ typedef enum
 
 typedef void *load_hw_t;
 
+typedef struct
+{
+	load_status_t (*write)(load_hw_t hw, load_state_t state);
+	load_status_t (*toggle)(load_hw_t hw);
+} load_hal_t;
+
 #endif
