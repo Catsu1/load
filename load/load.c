@@ -38,3 +38,21 @@ load_status_t load_init(load_id_t id, load_hw_t hw, const load_hal_t *hal, const
 
 	return load_set(id, cfg->init_state);
 }
+
+load_status_t load_set(load_id_t id, load_state_t state)
+{
+	if (id < 0 || id >= LOAD_MAX)
+	{
+		return LOAD_ERROR_ID;
+	}
+
+	load_instance_t *inst = &load_instances[id];
+	load_state_t mapped_state = state_for_trigger[state][inst->trigger];
+
+	if (NULL == inst->hal || NULL == inst->hal->write)
+	{
+		return LOAD_ERROR_NULL;
+	}
+
+	return inst->hal->write(inst->hw, mapped_state);
+}
