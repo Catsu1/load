@@ -10,4 +10,6 @@ typedef enum
 	LOAD_ERROR_NULL
 } load_status_t;
 
+typedef void *load_hw_t;
+
 #endif
