@@ -56,3 +56,20 @@ load_status_t load_set(load_id_t id, load_state_t state)
 
 	return inst->hal->write(inst->hw, mapped_state);
 }
+
+load_status_t load_toggle(load_id_t id)
+{
+	if (id < 0 || id >= LOAD_MAX)
+	{
+		return LOAD_ERROR_ID;
+	}
+
+	load_instance_t *inst = &load_instances[id];
+
+	if (NULL == inst->hal || NULL == inst->hal->toggle)
+	{
+		return LOAD_ERROR_NULL;
+	}
+
+	return inst->hal->toggle(inst->hw);
+}
