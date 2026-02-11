@@ -17,3 +17,24 @@ static const load_state_t state_for_trigger[][LOAD_TRIGGERS] =
 	{LOAD_ON, LOAD_OFF},
 	{LOAD_OFF, LOAD_ON}
 };
+
+load_status_t load_init(load_id_t id, load_hw_t hw, const load_hal_t *hal, const load_cfg_t *cfg)
+{
+	if (id >= LOAD_MAX || id < 0)
+	{
+		return LOAD_ERROR_ID;
+	}
+
+	if (NULL == hal || NULL == cfg)
+	{
+		return LOAD_ERROR_NULL;
+	}
+
+	load_instance_t *inst = &load_instances[id];
+
+	inst->hw = hw;
+	inst->hal = hal;
+	inst->trigger = cfg->trigger;
+
+	return load_set(id, cfg->init_state);
+}
