@@ -25,4 +25,6 @@ typedef struct
 	load_trigger_t trigger;
 } load_cfg_t;
 
+const load_cfg_t * load_get_config(load_id_t id);
+
 #endif
